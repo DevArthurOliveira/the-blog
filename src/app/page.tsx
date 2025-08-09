@@ -1,7 +1,7 @@
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { PostFeatured } from '@/components/postFeatured';
-import { PostsList } from '@/components/postsList';
+import { PostsList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
 
 import { Suspense } from 'react';
