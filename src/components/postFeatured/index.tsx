@@ -1,5 +1,5 @@
 import { PostCoverImage } from '../PostCoverImage';
-import { PostHeading } from '../PostHeading';
+import { PostSummary } from '../PostSummary';
 
 export function PostFeatured() {
   const slug = 'qualquer coisa';
@@ -19,20 +19,13 @@ export function PostFeatured() {
           priority: true,
         }}
       />
-      <div className='flex flex-col gap-4 justify-center'>
-        <time className='text-slate-600 text-sm/tight' dateTime='2025-04-05'>
-          05/04/2025
-        </time>
-        <PostHeading url={postLinks} as='h1'>
-          Recebendo titulo
-        </PostHeading>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis
-          blanditiis quis obcaecati itaque ipsum perspiciatis ratione magnam
-          nisi doloremque quaerat vero libero quam at fugit, quas repudiandae
-          incidunt beatae repellat.
-        </p>
-      </div>
+      <PostSummary
+        createdAt='2025-04-08T00:24:38'
+        title='Rotina matinal de pessoas altamente eficazes'
+        excerpt='O Next.js também é uma boa escolha para quem quer se preocupar com performance e SEO.'
+        postLink={postLinks}
+        postHeading='h1'
+      />
     </section>
   );
 }
