@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1755458742544,
+      "tag": "0000_romantic_alex_power",
+      "breakpoints": true
+    }
+  ]
+}

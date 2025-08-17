@@ -52,4 +52,11 @@ export class JsonPostRepository implements PostRepository {
 
     return post;
   }
+
+  async findAll(): Promise<PostModel[]> {
+    await this.simulateAwait();
+
+    const posts = await this.readFromDisk();
+    return posts;
+  }
 }
