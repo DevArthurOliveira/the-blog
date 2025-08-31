@@ -1,9 +1,10 @@
 'use client';
 
 import { deletePostAction } from '@/actions/post/delete-post-action';
+import { Dialog } from '@/components/Dialog';
 import clsx from 'clsx';
 import { Trash2Icon } from 'lucide-react';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 type DeletePostButtonProps = {
   id: string;
@@ -13,26 +14,45 @@ type DeletePostButtonProps = {
 export function DeletePostButton({ title, id }: DeletePostButtonProps) {
   const [isPending, startTransition] = useTransition();
 
-  async function handleClick() {
+  const [showDialog, setShowDialog] = useState(false);
+
+  function handleClick() {
+    setShowDialog(true);
+  }
+
+  function handleConfirm() {
     startTransition(async () => {
       const result = await deletePostAction(id);
       alert(`${result}`);
+      setShowDialog(false);
     });
   }
 
   return (
-    <button
-      className={clsx(
-        'cursor-pointer transition',
-        'hover:scale-110',
-        'disabled:text-red-700 disabled:cursor-not-allowed',
+    <>
+      <button
+        className={clsx(
+          'cursor-pointer transition',
+          'hover:scale-110',
+          'disabled:text-red-700 disabled:cursor-not-allowed',
+        )}
+        aria-label={`Excluir post:${title}`}
+        title='Exlcuir post'
+        onClick={handleClick}
+        disabled={isPending}
+      >
+        <Trash2Icon />
+      </button>
+      {showDialog && (
+        <Dialog
+          title='Apagar post'
+          isVisible={showDialog}
+          content={`Tem certeza que deseja excluir este post?`}
+          onCancel={() => setShowDialog(false)}
+          onConfirm={handleConfirm}
+          disabled={isPending}
+        />
       )}
-      aria-label={`Excluir post:${title}`}
-      title='Exlcuir post'
-      onClick={handleClick}
-      disabled={isPending}
-    >
-      <Trash2Icon />
-    </button>
+    </>
   );
 }
