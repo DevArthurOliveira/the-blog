@@ -23,8 +23,11 @@ export function DeletePostButton({ title, id }: DeletePostButtonProps) {
   function handleConfirm() {
     startTransition(async () => {
       const result = await deletePostAction(id);
-      alert(`${result}`);
       setShowDialog(false);
+
+      if (result.error) {
+        alert(`Error:${result.error}`);
+      }
     });
   }
 
