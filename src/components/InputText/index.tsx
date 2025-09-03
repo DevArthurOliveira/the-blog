@@ -20,7 +20,7 @@ export function InputText({ labelText = '', ...props }: InputTextProps) {
         {...props}
         className={clsx(
           'bg-white outline-0 ring-1 ring-slate-400 rounded',
-          'p-2 transition focus:ring-blue-500 placeholder-slate-300',
+          'p-1 transition focus:ring-blue-500 placeholder-slate-300',
           'disabled:bg-slate-200 disabled:placeholder-slate-300',
           'disabled:text-slate-400',
           'read-only:bg-slate-100',
