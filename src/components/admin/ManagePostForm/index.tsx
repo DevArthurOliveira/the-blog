@@ -15,7 +15,9 @@ export function ManagePostForm() {
         <div>
           <InputText labelText='Digite seu nome' />
         </div>
+
         <ImageUploader />
+
         <div>
           <InputCheckBox labelText='Nome' placeholder='Digite seu nome' />
         </div>
