@@ -1,4 +1,16 @@
+import { ManagePostForm } from '@/components/admin/ManagePostForm';
+import { SpinLoader } from '@/components/SpinLoader';
+import { makePublicPost } from '@/dto/post/dto';
+import { findPostByIdAdmin } from '@/lib/post/queries/admin';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+
 export const dynamic = 'force-dynamic';
+
+export const metadata: Metadata = {
+  title: 'Editar post',
+};
 
 type AdminPostIdPageProps = {
   params: Promise<{
@@ -11,5 +23,18 @@ export default async function AdminPostIdPage({
 }: AdminPostIdPageProps) {
   const { id } = await params;
 
-  return <div>AdminPostIdPage {id}</div>;
+  const post = await findPostByIdAdmin(id).catch();
+
+  if (!post) return notFound();
+
+  const publicPost = makePublicPost(post);
+
+  return (
+    <div className='flex flex-col gap-4'>
+      <h1 className='text-xl font-extrabold'>Editar post</h1>
+      <Suspense fallback={<SpinLoader className='m-h-20 mb-16' />}>
+        <ManagePostForm publicPost={publicPost} />
+      </Suspense>
+    </div>
+  );
 }
