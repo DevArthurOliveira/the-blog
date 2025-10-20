@@ -1,6 +1,6 @@
 'use server';
 
-import { makePartialPublicPost, publicPost } from '@/dto/post/dto';
+import { makePartialPublicPost, PublicPost } from '@/dto/post/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
 import { PostModel } from '@/models/post/post-model';
 import { postRepository } from '@/repositories/post';
@@ -11,8 +11,9 @@ import { redirect } from 'next/navigation';
 import { v4 as uuidV4 } from 'uuid';
 
 type CreatePostAcionState = {
-  formState: publicPost;
+  formState: PublicPost;
   errors: string[];
+  success?: true;
 };
 
 export async function createPostAction(

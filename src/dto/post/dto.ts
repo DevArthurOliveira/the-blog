@@ -1,10 +1,10 @@
 import { PostModel } from '@/models/post/post-model';
 
-export type publicPost = Omit<PostModel, 'updatedAt'>;
+export type PublicPost = Omit<PostModel, 'updatedAt'>;
 
 export const makePartialPublicPost = (
   post?: Partial<PostModel>,
-): publicPost => {
+): PublicPost => {
   return {
     id: post?.id || '',
     slug: post?.slug || '',
@@ -18,6 +18,6 @@ export const makePartialPublicPost = (
   };
 };
 
-export const makePublicPostFromDb = (post: PostModel): publicPost => {
+export const makePublicPostFromDb = (post: PostModel): PublicPost => {
   return makePartialPublicPost(post);
 };

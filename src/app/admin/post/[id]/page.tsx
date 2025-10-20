@@ -33,7 +33,7 @@ export default async function AdminPostIdPage({
     <div className='flex flex-col gap-4'>
       <h1 className='text-xl font-extrabold'>Editar post</h1>
       <Suspense fallback={<SpinLoader className='m-h-20 mb-16' />}>
-        <ManagePostForm publicPost={publicPost} />
+        <ManagePostForm mode='update' publicPost={publicPost} />
       </Suspense>
     </div>
   );

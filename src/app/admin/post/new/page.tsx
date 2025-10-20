@@ -14,7 +14,7 @@ export default async function AdminPostNewPage() {
     <div className='flex flex-col gap-4'>
       <h1 className='text-xl font-extrabold'>Criar post</h1>
       <Suspense fallback={<SpinLoader className='m-h-20 mb-16' />}>
-        <ManagePostForm />
+        <ManagePostForm mode='create' />
       </Suspense>
     </div>
   );
