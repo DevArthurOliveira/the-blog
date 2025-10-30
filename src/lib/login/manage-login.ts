@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { cookies } from 'next/headers';
 import { JWTPayload, SignJWT, jwtVerify } from 'jose';
+import { redirect } from 'next/navigation';
 
 const jwtSecretKey = process.env.JWT_SECRET_KEY;
 const jwtEncodeKey = new TextEncoder().encode(jwtSecretKey);
@@ -38,11 +39,37 @@ export async function createLoginSession(username: string) {
   });
 }
 
-await async function delteLoginSession() {
+export async function delteLoginSession() {
   const cookieStore = await cookies();
   cookieStore.set(loginCookieName, '', { expires: new Date(0) });
   cookieStore.delete(loginCookieName);
-};
+}
+
+export async function getLoginSession() {
+  const cookieStore = await cookies();
+
+  const jwt = cookieStore.get(loginCookieName)?.value;
+
+  if (!jwt) return false;
+
+  return verifyJwt(jwt);
+}
+
+export async function verifyLoginSession() {
+  const jwtPayLoad = await getLoginSession();
+
+  if (!jwtPayLoad) return false;
+
+  return jwtPayLoad?.username === process.env.LOGIN_USER;
+}
+
+export async function requireLoginSessionOrRedirect() {
+  const isAuthenticated = await verifyLoginSession();
+
+  if (!isAuthenticated) {
+    redirect('/admin/login');
+  }
+}
 
 export async function signJwt(jwtPayLoad: jwtPayLoad) {
   return new SignJWT(jwtPayLoad)
@@ -53,4 +80,15 @@ export async function signJwt(jwtPayLoad: jwtPayLoad) {
     .setIssuedAt()
     .setExpirationTime(loginExpStr)
     .sign(jwtEncodeKey);
+}
+
+export async function verifyJwt(jwt: string | undefined = '') {
+  try {
+    const { payload } = await jwtVerify(jwt, jwtEncodeKey, {
+      algorithms: ['HS256'],
+    });
+    return payload;
+  } catch {
+    return false;
+  }
 }
